@@ -22,17 +22,30 @@
 #toast{position:absolute;left:50%;top:26px;transform:translateX(-50%);background:rgba(255,250,240,.94);color:#6b3a52;padding:11px 24px;border-radius:999px;font-size:16px;box-shadow:0 10px 24px rgba(90,50,80,.25);opacity:0;transition:opacity .4s;white-space:nowrap}
 #joyBase{position:absolute;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.25);border:1.5px solid rgba(255,255,255,.65);display:none}
 #joyKnob{position:absolute;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.85);box-shadow:0 4px 12px rgba(0,0,0,.25);display:none}
+.gCake{position:relative;width:170px;margin:26px auto 10px;height:150px}
+.gHorn{position:absolute;left:50%;top:0;transform:translateX(-50%);width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;border-bottom:34px solid #e8b64c;z-index:3}
+.gCandles{position:absolute;left:50%;top:16px;transform:translateX(-50%);display:flex;gap:16px;z-index:2}
+.gCandles i{width:5px;height:20px;background:#fdfdfd;border-radius:2px;position:relative;display:block}
+.gCandles i::before{content:'';position:absolute;left:50%;top:-11px;transform:translateX(-50%);width:7px;height:11px;border-radius:50%;background:#ffca6a;box-shadow:0 0 10px 3px rgba(255,180,80,.55);animation:flk 1.1s ease-in-out infinite alternate}
+.gCandles i:nth-child(2)::before{animation-delay:.3s}.gCandles i:nth-child(3)::before{animation-delay:.55s}
+@keyframes flk{from{transform:translateX(-50%) scale(1)}to{transform:translateX(-52%) scale(1.15)}}
+.gTier{position:absolute;left:50%;transform:translateX(-50%);border-radius:12px;background:#fff8f2;box-shadow:inset 0 -10px 0 rgba(240,180,205,.55)}
+.gTop{width:112px;height:38px;top:44px;z-index:1}
+.gBot{width:158px;height:46px;top:78px}
+.gBot::after{content:'\25CF  \25CF';position:absolute;left:50%;top:14px;transform:translateX(-50%);color:#8a5a44;font-size:10px;letter-spacing:12px;text-indent:12px}
+.gPlate{position:absolute;left:50%;transform:translateX(-50%);top:126px;width:184px;height:10px;border-radius:50%;background:#e8b64c;opacity:.85}
+#earlyOpen{position:absolute;right:14px;bottom:12px;font-size:12px;letter-spacing:.08em;color:rgba(61,44,75,.6);text-decoration:underline;cursor:pointer;z-index:41}
 #musicBtn{position:absolute;right:16px;top:16px;pointer-events:auto;width:42px;height:42px;border-radius:50%;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.85);font-size:18px;cursor:pointer}
 #hint{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:5;font-family:Georgia,serif;font-size:15px;letter-spacing:.04em;color:#6b3a52;background:rgba(255,250,240,.88);padding:9px 20px;border-radius:999px;box-shadow:0 8px 22px rgba(90,50,80,.25);pointer-events:none;white-space:nowrap}</style>
 </head><body>
 <div id="gate"><div id="gateCard">
 <div class="kick">A birthday gift &nbsp;·&nbsp; Tonight, 12:00</div>
-<img class="heroImg" src="hero.jpg" alt="">
+<div class="gCake"><div class="gHorn"></div><div class="gCandles"><i></i><i></i><i></i></div><div class="gTier gTop"></div><div class="gTier gBot"></div><div class="gPlate"></div></div>
 <h1>Something sweet<br>is on its way</h1>
 <p>for someone very special, wait till the clock says 12</p>
 <div id="cd"><div><b id="cdH">00</b><span>HOURS</span></div><div><b id="cdM">00</b><span>MINUTES</span></div><div><b id="cdS">00</b><span>SECONDS</span></div></div>
 <button id="openBtn">NOT YET, WAIT TILL 12</button>
-</div></div>
+</div><a id="earlyOpen">open early</a></div>
 <div id="hud">
 <div id="toast"></div>
 <button id="musicBtn" title="music">&#9834;</button>
@@ -298,6 +311,7 @@ openBtn.addEventListener('click',()=>{
   hintEl.innerHTML='Tap anywhere to begin';
   showToast('Happy Birthday, Jefrina',4);
 });
+document.getElementById('earlyOpen').addEventListener('click',()=>{gateReady=true;refreshGate();openBtn.click();});
 function startSwing(){mode='swing';swingT0=elapsedNow;ashfan.userData.armR.rotation.z=0.24;hintEl.innerHTML='Left side: walk &nbsp;·&nbsp; Right side drag: camera &nbsp;·&nbsp; WASD works too';}
 renderer.domElement.addEventListener('pointerdown',()=>{if(mode==='opening')startSwing();});
 // TPP input: right half orbit, left half joystick
